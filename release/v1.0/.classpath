@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/javassist.jar"/>
+	<classpathentry kind="lib" path="lib/scannotation-1.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/apache/jcl-over-slf4j-1.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/apache/ldap-client-api-0.1.jar"/>
+	<classpathentry kind="lib" path="lib/apache/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/apache/shared-all-0.9.18.jar"/>
+	<classpathentry kind="lib" path="lib/apache/slf4j-api-1.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/apache/slf4j-log4j12-1.5.10.jar"/>
+	<classpathentry kind="lib" path="lib/unboundid/unboundid-ldapsdk-se.jar"/>
+	<classpathentry kind="lib" path="lib/novell/ldap.jar"/>
+	<classpathentry kind="lib" path="lib/novell/utilities.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

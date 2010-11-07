@@ -1,0 +1,14 @@
+package org.odiem.api;
+
+import java.util.Properties;
+
+public interface OdmStackFactory {
+
+	public Properties getProperties();
+
+	public OdmStack createStack(String host, int port) throws Exception;
+
+	public OdmStack createStack(String host, int port, String username,
+			String password) throws Exception;
+
+}

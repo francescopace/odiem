@@ -4,7 +4,9 @@ If you want to use odiem whith boundled jndi sun stack, you don't need other lib
 
 == Unboundid stack ==
 
-Add lib/unboundid/*unboundid-ldapsdk-se.jar* to your classpath
+Add following libraries to your classpath:
+
+  * lib/unboundid/*unboundid-ldapsdk-se.jar*
 
 == Apache stack ==
 

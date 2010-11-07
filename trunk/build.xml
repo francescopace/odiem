@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="odiem" default="jar">
+<project name="odiem" default="zip">
 
 	<property file="./build.properties" />
 	<property name="jarfile" value="${ant.project.name}_v${version}.jar" />
+	<property name="zipfile" value="${ant.project.name}_v${version}.zip" />
 
 	<path id="lib.classpath">
 		<fileset dir="lib">
@@ -21,9 +22,7 @@
 	</target>
 
 	<target name="build" depends="init">
-		<javac srcdir="${src}" destdir="${build}"
-			debug="${debug}" debuglevel="lines,vars,source"
-			target="1.5" source="1.5" includeAntRuntime="false">
+		<javac srcdir="${src}" destdir="${build}" debug="${debug}" debuglevel="lines,vars,source" target="1.5" source="1.5" includeAntRuntime="false">
 			<classpath refid="lib.classpath" />
 		</javac>
 
@@ -41,6 +40,14 @@
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
 		</jar>
+		<delete dir="${build}" />
+	</target>
+
+	<target name="zip" depends="jar">
+		<copy todir="${dist}/lib">
+			<fileset dir="lib" />
+		</copy>
+		<zip destfile="${dist}/${zipfile}" basedir="${dist}" />
 		<delete dir="${build}" />
 	</target>
 

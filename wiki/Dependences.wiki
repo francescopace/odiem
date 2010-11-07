@@ -1,0 +1,25 @@
+=Library dependences.=
+
+If you want to use odiem whith boundled jndi sun stack, you don't need other libraries.
+
+== Unboundid stack ==
+
+Add *unboundid-ldapsdk-se.jar* to your classpath
+
+== Apache stack ==
+
+Add following libraries to your classpath:
+
+  * *jcl-over-slf4j-1.5.10.jar*
+  * *ldap-client-api-0.1.jar*
+  * *log4j.jar*
+  * *shared-all-0.9.18.jar*
+  * *slf4j-api-1.5.10.jar*
+  * *slf4j-log4j12-1.5.10.jar*
+
+== Advanced featured ==
+
+If you want to search on a bean marked as abstract you have to add to your classpath
+
+  * *javassist.jar*
+  * *scannotation-1.0.2.jar*

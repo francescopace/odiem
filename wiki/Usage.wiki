@@ -1,0 +1,41 @@
+=Usage=
+
+First of all you have create a connection factory:
+{{{
+OdmConnectionFactory odmFactory = OdmDriverManager.getConnectionFactory("jndi.odm.driver");
+}}}
+
+You can use:
+|| *Driver Name* || *Stack* ||
+||_jndi.odm.driver_||Sun JNDI Stack||
+||_unboundid.odm.driver_||Unboundid Stack||
+||_apache.odm.driver_||Apache Stack||
+||_novell.odm.driver_||Novell Stack||
+||_yourcustomname_||Your custom Stack||
+
+Now you can get a connection:
+{{{
+odmConnection = odmFactory.createConnection("localhost", 389, "cn=Directory Manager", "secret");
+}}}
+
+Than, if you want, you can set an event Listener:
+
+{{{
+odmConnection.setConnectionListener(new MyListener());
+}}}
+
+Ok, that's all... try to add, update or remove a bean (see [MappingExample Mapping example])
+{{{
+OdmPerson person = new OdmPerson();
+person.setCommonName("imAPersonOne");
+person.setSurname("love");
+person.setBasedn("ou=test,dc=cab");
+
+odmConnection.add(person);
+}}}
+
+At the end, remember to close your connection:
+
+{{{
+odmConnection.close();
+}}}

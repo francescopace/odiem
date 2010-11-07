@@ -6,8 +6,9 @@
   * Apache has a bug un subtree delete
 
 == 10 second test ==
-
+{{{
 odiem (using Unboundid stack): 23361 fetch
 odiem (using Apache stack): 23616 fetch
 odiem (using Jndi stack): 21591 fetch
 odiem (using Novell stack): 21124 fetch
+}}}

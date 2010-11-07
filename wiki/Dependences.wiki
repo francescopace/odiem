@@ -17,6 +17,14 @@ Add following libraries to your classpath:
   * *slf4j-api-1.5.10.jar*
   * *slf4j-log4j12-1.5.10.jar*
 
+== Novel stack ==
+
+Add following libraries to your classpath:
+
+  * *ldap.jar*
+  * *utilities.jar*
+
+
 == Advanced featured ==
 
 If you want to search on a bean marked as abstract you have to add to your classpath

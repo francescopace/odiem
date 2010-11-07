@@ -47,8 +47,7 @@ public class StackImpl implements OdmStack {
 		DeleteRequest deleteRequest = new DeleteRequest(new DN(dn));
 		deleteRequest.add(controls);
 		deleteRequest.add(new ControlImpl("1.2.840.113556.1.4.805"));
-//		ldapconnection.delete(deleteRequest);
-		ldapconnection.deleteTree(dn);
+		ldapconnection.delete(deleteRequest);
 	}
 
 	@Override

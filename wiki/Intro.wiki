@@ -1,6 +1,6 @@
 =Odiem (ODM), Object Directory Mapping=
 
-Like ORMs (object relational mapping) maps java bean to SQL tables, 
+As well as ORMs (object relational mapping) maps java bean to SQL tables, 
 odiem is a usefull java library that make you able to map a java bean to an *LDAP* object.
 
 ==Features:==

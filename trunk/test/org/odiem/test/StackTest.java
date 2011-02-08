@@ -28,12 +28,14 @@ public class StackTest {
 	private static OdmConnection odmJndiConnection;
 	private static OdmConnection odmApacheConnection;
 	private static OdmConnection odmNovellConnection;
+	private static OdmConnection odmOpendsConnection;
 
 	private static OdmOrganizationalUnit organizationalUnit;
 	private static OdmFriend pojo;
 
 	private static boolean stop = false;
 
+	
 	@BeforeClass
 	public static void setUp() throws Exception {
 		try {
@@ -61,6 +63,12 @@ public class StackTest {
 			OdmConnectionFactory odmFactoryN = OdmDriverManager
 					.getConnectionFactory("novell.odm.driver", null);
 			odmNovellConnection = odmFactoryN.createConnection(HOST, PORT,
+					USERNAME, PASSWORD, true);
+			
+			// odiem opends
+			OdmConnectionFactory odmFactoryO = OdmDriverManager
+					.getConnectionFactory("opends.odm.driver", null);
+			odmOpendsConnection = odmFactoryO.createConnection(HOST, PORT,
 					USERNAME, PASSWORD, true);
 
 			// prepare a pojo
@@ -99,6 +107,7 @@ public class StackTest {
 			odmJndiConnection.close();
 			odmApacheConnection.close();
 			odmNovellConnection.close();
+			odmOpendsConnection.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -161,6 +170,21 @@ public class StackTest {
 				n++;
 			}
 			System.out.println("odiemNovellThread: " + n);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void odiemOpends() throws Exception {
+		try {
+			int n = 0;
+			Timer.go();
+			while (!stop) {
+				odmOpendsConnection.fetch(pojo, OdmChildScope.NO_CHILDS);
+				n++;
+			}
+			System.out.println("odiemOpendsThread: " + n);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

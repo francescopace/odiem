@@ -14,6 +14,8 @@
 	<classpathentry kind="lib" path="lib/unboundid/unboundid-ldapsdk-se.jar"/>
 	<classpathentry kind="lib" path="lib/novell/ldap.jar"/>
 	<classpathentry kind="lib" path="lib/novell/utilities.jar"/>
+	<classpathentry kind="lib" path="lib/opends/grizzly.jar"/>
+	<classpathentry kind="lib" path="lib/opends/opends-sdk.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

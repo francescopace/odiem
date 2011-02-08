@@ -11,6 +11,7 @@ You can use:
 ||_unboundid.odm.driver_||Unboundid Stack||
 ||_apache.odm.driver_||Apache Stack||
 ||_novell.odm.driver_||Novell Stack||
+||_opends.odm.driver_||Opends Stack||
 ||_yourcustomname_||Your custom Stack||
 
 Now you can get a connection:

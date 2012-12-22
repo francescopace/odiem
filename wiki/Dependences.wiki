@@ -20,7 +20,7 @@ Add following libraries to your classpath:
 
   * lib/unboundid/`*`.jar
 
-== Opends stack ==
+== Opends/Opendj stack ==
 
 Add following libraries to your classpath:
 

@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.directory.ldap.client.api.message.AddRequest;
-import org.apache.directory.ldap.client.api.message.ModifyRequest;
-import org.apache.directory.ldap.client.api.message.SearchRequest;
-import org.apache.directory.ldap.client.api.message.SearchResponse;
-import org.apache.directory.ldap.client.api.message.SearchResultEntry;
-import org.apache.directory.shared.ldap.cursor.Cursor;
-import org.apache.directory.shared.ldap.entry.Entry;
-import org.apache.directory.shared.ldap.entry.EntryAttribute;
-import org.apache.directory.shared.ldap.entry.ModificationOperation;
-import org.apache.directory.shared.ldap.entry.Value;
-import org.apache.directory.shared.ldap.entry.client.DefaultClientAttribute;
-import org.apache.directory.shared.ldap.entry.client.DefaultClientEntry;
-import org.apache.directory.shared.ldap.filter.SearchScope;
-import org.apache.directory.shared.ldap.message.control.Control;
-import org.apache.directory.shared.ldap.name.DN;
+import org.apache.directory.shared.ldap.model.cursor.SearchCursor;
+import org.apache.directory.shared.ldap.model.entry.Attribute;
+import org.apache.directory.shared.ldap.model.entry.DefaultAttribute;
+import org.apache.directory.shared.ldap.model.entry.DefaultEntry;
+import org.apache.directory.shared.ldap.model.entry.Entry;
+import org.apache.directory.shared.ldap.model.entry.ModificationOperation;
+import org.apache.directory.shared.ldap.model.entry.Value;
+import org.apache.directory.shared.ldap.model.message.AddRequest;
+import org.apache.directory.shared.ldap.model.message.AddRequestImpl;
+import org.apache.directory.shared.ldap.model.message.Control;
+import org.apache.directory.shared.ldap.model.message.ModifyRequest;
+import org.apache.directory.shared.ldap.model.message.ModifyRequestImpl;
+import org.apache.directory.shared.ldap.model.message.SearchRequest;
+import org.apache.directory.shared.ldap.model.message.SearchRequestImpl;
+import org.apache.directory.shared.ldap.model.message.SearchResultEntry;
+import org.apache.directory.shared.ldap.model.message.SearchScope;
+import org.apache.directory.shared.ldap.model.name.Dn;
 import org.odiem.sdk.beans.OdmAttribute;
 import org.odiem.sdk.beans.OdmSearchResultEntry;
 import org.odiem.sdk.beans.OdmSearchScope;
@@ -30,10 +32,10 @@ public class Converter {
 		OdmAttribute[] tmp = null;
 		if (entry != null) {
 			tmp = new OdmAttribute[entry.size()];
-			Iterator<EntryAttribute> it = entry.iterator();
+			Iterator<Attribute> it = entry.iterator();
 			int i = 0;
 			while (it.hasNext()) {
-				EntryAttribute entryAttribute = it.next();
+				Attribute entryAttribute = it.next();
 				Iterator<Value<?>> eit = entryAttribute.iterator();
 				String[] values = new String[entryAttribute.size()];
 
@@ -54,7 +56,7 @@ public class Converter {
 			List<OdmAttribute> attributes, Control... controls)
 			throws Exception {
 
-		DefaultClientEntry tmp = new DefaultClientEntry(new DN(dn));
+		Entry tmp = new DefaultEntry(new Dn(dn));
 		if (attributes != null) {
 			for (OdmAttribute odmAttribute : attributes) {
 				if (odmAttribute.getValues().length > 0) {
@@ -62,8 +64,9 @@ public class Converter {
 				}
 			}
 		}
-		AddRequest addRequest = new AddRequest(tmp);
-		addRequest.add(controls);
+		AddRequest addRequest = new AddRequestImpl();
+		addRequest.setEntry(tmp);
+		addRequest.addAllControls(controls);
 
 		return addRequest;
 	}
@@ -71,17 +74,18 @@ public class Converter {
 	public static ModifyRequest createModifyRequest(String dn,
 			List<OdmAttribute> attributes, Control... controls)
 			throws Exception {
-		ModifyRequest tmp = new ModifyRequest(new DN(dn));
-		tmp.add(controls);
+		ModifyRequest tmp = new ModifyRequestImpl();
+		tmp.setName(new Dn(dn));
+		tmp.addAllControls(controls);
 		if (attributes != null) {
 			for (OdmAttribute odmAttribute : attributes) {
-				EntryAttribute entry = new DefaultClientAttribute(
+				Attribute attribute = new DefaultAttribute(
 						odmAttribute.getName(), odmAttribute.getValues());
 				if (odmAttribute.getValues().length > 0) {
-					tmp.addModification(entry,
+					tmp.addModification(attribute,
 							ModificationOperation.REPLACE_ATTRIBUTE);
 				} else {
-					tmp.addModification(entry,
+					tmp.addModification(attribute,
 							ModificationOperation.REMOVE_ATTRIBUTE);
 				}
 			}
@@ -90,12 +94,12 @@ public class Converter {
 	}
 
 	public static List<OdmSearchResultEntry> searchResponseToOdmSearchResultEntry(
-			Cursor<SearchResponse> cursor) throws Exception {
+			SearchCursor searchCursor) throws Exception {
 
 		ArrayList<OdmSearchResultEntry> list = new ArrayList<OdmSearchResultEntry>();
 
-		while (cursor.next()) {
-			SearchResultEntry searchResultEntry = (SearchResultEntry) cursor
+		while (searchCursor.next()) {
+			SearchResultEntry searchResultEntry = (SearchResultEntry) searchCursor
 					.get();
 
 			list.add(new OdmSearchResultEntry(searchResultEntry.getObjectName()
@@ -121,8 +125,8 @@ public class Converter {
 				scope = SearchScope.SUBTREE;
 				break;
 			}
-			SearchRequest searchRequest = new SearchRequest();
-			searchRequest.setBaseDn(baseDn);
+			SearchRequest searchRequest = new SearchRequestImpl();
+			searchRequest.setBase(new Dn(baseDn));
 			searchRequest.setFilter(filter);
 			searchRequest.setScope(scope);
 			searchRequest.addAttributes(attributes);

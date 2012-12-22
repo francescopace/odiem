@@ -2,22 +2,22 @@ package org.odiem.stacks.opends;
 
 import java.util.Properties;
 
-import org.glassfish.grizzly.TransportFactory;
+import org.forgerock.opendj.ldap.Connection;
+import org.forgerock.opendj.ldap.LDAPConnectionFactory;
+import org.forgerock.opendj.ldap.LDAPOptions;
 import org.odiem.api.OdmStack;
 import org.odiem.api.OdmStackFactory;
 import org.odiem.sdk.exceptions.OdmException;
-import org.opends.sdk.Connection;
-import org.opends.sdk.LDAPConnectionFactory;
-
-import com.sun.opends.sdk.tools.PerfToolTCPNIOTransportFactory;
 
 public class StackFactoryImpl implements OdmStackFactory {
 
 	private Properties properties;
+	private LDAPOptions ldapOptions = new LDAPOptions();
 
 	public StackFactoryImpl(Properties properties) {
 		this.properties = properties;
-		TransportFactory.setInstance(new PerfToolTCPNIOTransportFactory());
+		//TODO
+		//ldapOptions.setTCPNIOTransport(new TCPNIOTransport());
 	}
 
 	@Override
@@ -34,10 +34,10 @@ public class StackFactoryImpl implements OdmStackFactory {
 	public OdmStack createStack(String host, int port, String username,
 			String password) throws OdmException {
 		try {
-			
-			//opends
-			LDAPConnectionFactory factory = new LDAPConnectionFactory(
-					host, port);
+
+			// opends
+			LDAPConnectionFactory factory = new LDAPConnectionFactory(host,
+					port, ldapOptions);
 			Connection connection = factory.getConnection();
 			if (username != null) {
 				connection.bind(username, password.toCharArray());

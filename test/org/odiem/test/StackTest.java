@@ -20,8 +20,8 @@ public class StackTest {
 	private static final long TIME = 10000;
 
 	private static final String HOST = "localhost";
-	private static final int PORT = 1389;
-	private static final String USERNAME = "cn=Manager";
+	private static final int PORT = 389;
+	private static final String USERNAME = "cn=Directory Manager";
 	private static final String PASSWORD = "secret";
 
 	private static OdmConnection odmUnboundidConnection;

@@ -5,7 +5,7 @@
   * At the moment, only jndi stack implements *createProxy()* method
 
 == 10 second test on a Pentium(R) Dual-Core CPU E5700 @ 3GHz, 2GB RAM==
-Server and client is running on same machine.
+Server and Client are on same machine.
 
 {{{
 odiem (using Unboundid stack): 8000 fetch

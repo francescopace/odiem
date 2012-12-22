@@ -2,30 +2,29 @@
 
 If you want to use odiem whith boundled jndi sun stack, you don't need other libraries.
 
-== Unboundid stack ==
-
-Add following libraries to your classpath:
-
-  * lib/unboundid/*unboundid-ldapsdk-se.jar*
-
 == Apache stack ==
 
 Add following libraries to your classpath:
 
-  * lib/apache/*jcl-over-slf4j-1.5.10.jar*
-  * lib/apache/*ldap-client-api-0.1.jar*
-  * lib/apache/*log4j.jar*
-  * lib/apache/*shared-all-0.9.18.jar*
-  * lib/apache/*slf4j-api-1.5.10.jar*
-  * lib/apache/*slf4j-log4j12-1.5.10.jar*
+  * lib/apache/**.jar*
 
 == Novel stack ==
 
 Add following libraries to your classpath:
 
-  * lib/novell/*ldap.jar*
-  * lib/novell/*utilities.jar*
+  * lib/novell/**.jar*
 
+== Unboundid stack ==
+
+Add following libraries to your classpath:
+
+  * lib/unboundid/**.jar*
+
+== Opends stack ==
+
+Add following libraries to your classpath:
+
+  * lib/opends/**.jar*
 
 == Advanced featured ==
 

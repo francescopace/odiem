@@ -6,25 +6,25 @@ If you want to use odiem whith boundled jndi sun stack, you don't need other lib
 
 Add following libraries to your classpath:
 
-  * lib/apache/*\*.jar*
+  * lib/apache/*.jar
 
 == Novel stack ==
 
 Add following libraries to your classpath:
 
-  * lib/novell/*\*.jar*
+  * lib/novell/*.jar
 
 == Unboundid stack ==
 
 Add following libraries to your classpath:
 
-  * lib/unboundid/*\*.jar*
+  * lib/unboundid/*.jar
 
 == Opends stack ==
 
 Add following libraries to your classpath:
 
-  * lib/opends/*\*.jar*
+  * lib/opends/*.jar
 
 == Advanced featured ==
 

@@ -2,7 +2,7 @@
 
 == Stack known issues ==
 
-  * Novell and Apache stacks does not implement *createProxy()* method
+  * At the moment, only jndi stack implements *createProxy()* method
 
 == 10 second test ==
 {{{

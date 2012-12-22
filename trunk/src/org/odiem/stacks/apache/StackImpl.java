@@ -4,16 +4,17 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.directory.ldap.client.api.LdapConnection;
-import org.apache.directory.ldap.client.api.message.DeleteRequest;
-import org.apache.directory.ldap.client.api.message.SearchRequest;
-import org.apache.directory.shared.ldap.codec.controls.ControlImpl;
-import org.apache.directory.shared.ldap.message.control.Control;
-import org.apache.directory.shared.ldap.name.DN;
+import org.apache.directory.shared.ldap.model.message.Control;
+import org.apache.directory.shared.ldap.model.message.DeleteRequest;
+import org.apache.directory.shared.ldap.model.message.DeleteRequestImpl;
+import org.apache.directory.shared.ldap.model.message.SearchRequest;
+import org.apache.directory.shared.ldap.model.name.Dn;
 import org.odiem.api.OdmStack;
 import org.odiem.api.OdmStackListener;
 import org.odiem.sdk.beans.OdmAttribute;
 import org.odiem.sdk.beans.OdmSearchResultEntry;
 import org.odiem.sdk.beans.OdmSearchScope;
+import org.odiem.stacks.apache.controls.TreeDeleteControl;
 
 public class StackImpl implements OdmStack {
 
@@ -44,9 +45,10 @@ public class StackImpl implements OdmStack {
 
 	@Override
 	public void delete(String dn) throws Exception {
-		DeleteRequest deleteRequest = new DeleteRequest(new DN(dn));
-		deleteRequest.add(controls);
-		deleteRequest.add(new ControlImpl("1.2.840.113556.1.4.805"));
+		DeleteRequest deleteRequest = new DeleteRequestImpl();
+		deleteRequest.setName(new Dn(dn));
+		deleteRequest.addAllControls(controls);
+		deleteRequest.addControl(new TreeDeleteControl());
 		ldapconnection.delete(deleteRequest);
 	}
 
@@ -69,7 +71,7 @@ public class StackImpl implements OdmStack {
 		SearchRequest searchRequest = Converter.prepareSearchRequest(baseDn,
 				searchscope, filter, atrributes);
 
-		searchRequest.add(controls);
+		searchRequest.addAllControls(controls);
 
 		return Converter.searchResponseToOdmSearchResultEntry(ldapconnection
 				.search(searchRequest));

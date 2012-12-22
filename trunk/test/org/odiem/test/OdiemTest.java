@@ -27,8 +27,8 @@ import org.odiem.test.pojo.SimplePhone;
 public class OdiemTest implements OdmConnectionListener {
 
 	private static final String HOST = "localhost";
-	private static final int PORT = 1389;
-	private static final String USERNAME = "cn=Manager";
+	private static final int PORT = 389;
+	private static final String USERNAME = "cn=Directory Manager";
 	private static final String PASSWORD = "secret";
 
 	private static OdmConnection odmConnection;
@@ -50,7 +50,7 @@ public class OdiemTest implements OdmConnectionListener {
 			properties.put(DriverImpl.PROPS.POOL_SIZE, "10");
 
 			OdmConnectionFactory odmFactory = OdmDriverManager
-					.getConnectionFactory("unboundid.odm.driver", properties);
+					.getConnectionFactory("jndi.odm.driver", properties);
 
 			odmConnection = odmFactory.createConnection(HOST, PORT, USERNAME,
 					PASSWORD);

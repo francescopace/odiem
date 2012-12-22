@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.forgerock.opendj.ldap.Attribute;
+import org.forgerock.opendj.ldap.ByteString;
+import org.forgerock.opendj.ldap.Entry;
+import org.forgerock.opendj.ldap.ModificationType;
+import org.forgerock.opendj.ldap.SearchScope;
+import org.forgerock.opendj.ldap.controls.Control;
+import org.forgerock.opendj.ldap.requests.AddRequest;
+import org.forgerock.opendj.ldap.requests.ModifyRequest;
+import org.forgerock.opendj.ldap.requests.Requests;
+import org.forgerock.opendj.ldap.requests.SearchRequest;
+import org.forgerock.opendj.ldap.responses.SearchResultEntry;
+import org.forgerock.opendj.ldif.ConnectionEntryReader;
 import org.odiem.sdk.beans.OdmAttribute;
 import org.odiem.sdk.beans.OdmSearchResultEntry;
 import org.odiem.sdk.beans.OdmSearchScope;
 import org.odiem.sdk.exceptions.OdmException;
-import org.opends.sdk.Attribute;
-import org.opends.sdk.ByteString;
-import org.opends.sdk.Entry;
-import org.opends.sdk.ModificationType;
-import org.opends.sdk.SearchScope;
-import org.opends.sdk.controls.Control;
-import org.opends.sdk.ldif.ConnectionEntryReader;
-import org.opends.sdk.requests.AddRequest;
-import org.opends.sdk.requests.ModifyRequest;
-import org.opends.sdk.requests.Requests;
-import org.opends.sdk.requests.SearchRequest;
-import org.opends.sdk.responses.SearchResultEntry;
 
 public class Converter {
 
@@ -40,7 +40,9 @@ public class Converter {
 					j++;
 				}
 
-				tmp[i] = new OdmAttribute(entryAttribute.getAttributeDescriptionAsString(), values);
+				tmp[i] = new OdmAttribute(
+						entryAttribute.getAttributeDescriptionAsString(),
+						values);
 				i++;
 			}
 		}
@@ -50,16 +52,17 @@ public class Converter {
 	public static AddRequest createAddRequest(String dn,
 			List<OdmAttribute> attributes, Control... controls)
 			throws Exception {
-		
+
 		AddRequest addRequest = Requests.newAddRequest(dn);
 		for (Control control : controls) {
 			addRequest.addControl(control);
 		}
-		
+
 		if (attributes != null) {
 			for (OdmAttribute odmAttribute : attributes) {
 				if (odmAttribute.getValues().length > 0) {
-					addRequest.addAttribute(odmAttribute.getName(), odmAttribute.getValues());
+					addRequest.addAttribute(odmAttribute.getName(),
+							odmAttribute.getValues());
 				}
 			}
 		}
@@ -71,17 +74,19 @@ public class Converter {
 			List<OdmAttribute> attributes, Control... controls)
 			throws Exception {
 		ModifyRequest modifyRequest = Requests.newModifyRequest(dn);
-		
+
 		for (Control control : controls) {
 			modifyRequest.addControl(control);
 		}
-		
+
 		if (attributes != null) {
 			for (OdmAttribute odmAttribute : attributes) {
 				if (odmAttribute.getValues().length > 0) {
-					modifyRequest.addModification(ModificationType.REPLACE,odmAttribute.getName(), odmAttribute.getValues());
+					modifyRequest.addModification(ModificationType.REPLACE,
+							odmAttribute.getName(), odmAttribute.getValues());
 				} else {
-					modifyRequest.addModification(ModificationType.DELETE,odmAttribute.getName(), odmAttribute.getValues());
+					modifyRequest.addModification(ModificationType.DELETE,
+							odmAttribute.getName(), odmAttribute.getValues());
 				}
 			}
 		}
@@ -119,7 +124,8 @@ public class Converter {
 				scope = SearchScope.WHOLE_SUBTREE;
 				break;
 			}
-			SearchRequest searchRequest = Requests.newSearchRequest(baseDn, scope, filter, attributes);
+			SearchRequest searchRequest = Requests.newSearchRequest(baseDn,
+					scope, filter, attributes);
 			return searchRequest;
 		} catch (Exception e) {
 			throw new OdmException(e);

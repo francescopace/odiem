@@ -1,20 +1,18 @@
 package org.odiem.stacks.opends;
 
 import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
 
+import org.forgerock.opendj.ldap.Connection;
+import org.forgerock.opendj.ldap.controls.Control;
+import org.forgerock.opendj.ldap.controls.SubtreeDeleteRequestControl;
+import org.forgerock.opendj.ldap.requests.DeleteRequest;
+import org.forgerock.opendj.ldap.requests.Requests;
+import org.forgerock.opendj.ldap.requests.SearchRequest;
 import org.odiem.api.OdmStack;
 import org.odiem.api.OdmStackListener;
 import org.odiem.sdk.beans.OdmAttribute;
 import org.odiem.sdk.beans.OdmSearchResultEntry;
 import org.odiem.sdk.beans.OdmSearchScope;
-import org.opends.sdk.Connection;
-import org.opends.sdk.controls.Control;
-import org.opends.sdk.controls.SubtreeDeleteRequestControl;
-import org.opends.sdk.requests.DeleteRequest;
-import org.opends.sdk.requests.Requests;
-import org.opends.sdk.requests.SearchRequest;
-import org.opends.sdk.responses.Response;
 
 public class StackImpl implements OdmStack {
 
@@ -22,7 +20,7 @@ public class StackImpl implements OdmStack {
 	private String username;
 	private Control[] controls;
 	private OdmStackListener stackListener;
-	
+
 	public StackImpl(Connection connection, String username,
 			Control... controls) {
 		this.ldapconnection = connection;
@@ -77,7 +75,7 @@ public class StackImpl implements OdmStack {
 		}
 
 		return Converter.searchResponseToOdmSearchResultEntry(ldapconnection
-				.search(searchRequest,new LinkedBlockingQueue<Response>()));
+				.search(searchRequest));
 	}
 
 	@Override

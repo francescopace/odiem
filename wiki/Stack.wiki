@@ -3,7 +3,6 @@
 == Stack known issues ==
 
   * Novell and Apache stacks does not implement *createProxy()* method
-  * Apache has a bug on subtree delete
 
 == 10 second test ==
 {{{

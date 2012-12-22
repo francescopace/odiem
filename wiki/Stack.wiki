@@ -1,11 +1,8 @@
 = Stack comparison =
 
-== Stack known issues ==
-
-  * At the moment, only jndi stack implements *createProxy()* method
-
-== 10 second test on a Pentium(R) Dual-Core CPU E5700 @ 3GHz, 2GB RAM==
+== 10 second test ==
 Server and Client are on same machine.
+Machine datas: Pentium(R) Dual-Core CPU E5700 @ 3GHz, 2GB RAM
 
 {{{
 odiem (using Unboundid stack): 8000 fetch

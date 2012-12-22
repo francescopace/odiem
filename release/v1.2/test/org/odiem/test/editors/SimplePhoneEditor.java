@@ -1,0 +1,27 @@
+package org.odiem.test.editors;
+
+import java.beans.PropertyEditorSupport;
+
+import org.odiem.test.pojo.SimplePhone;
+
+public class SimplePhoneEditor extends PropertyEditorSupport {
+
+	@Override
+	public String getAsText() {
+		SimplePhone simplePhone=(SimplePhone)getValue();
+		if (simplePhone != null) {
+			return simplePhone.getPrefix()+simplePhone.getNumber();
+		} else {
+			return null;
+		}
+
+	}
+
+	@Override
+	public void setAsText(String text) throws IllegalArgumentException {
+		if (text != null) {
+			SimplePhone simplePhone = new SimplePhone(text.substring(0,2),text.substring(2));
+			setValue(simplePhone);
+		}
+	}
+}

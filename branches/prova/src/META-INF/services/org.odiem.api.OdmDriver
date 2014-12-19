@@ -1,0 +1,6 @@
+#ODM Drivers
+org.odiem.stacks.unbounid.DriverImpl
+org.odiem.stacks.jndi.DriverImpl
+org.odiem.stacks.apache.DriverImpl
+org.odiem.stacks.novell.DriverImpl
+org.odiem.stacks.opends.DriverImpl

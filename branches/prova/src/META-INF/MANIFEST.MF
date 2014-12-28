@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Built-By: francesco pace
-Implementation-Title: ODM:object directory mapping
-Implementation-Vendor-Id: Odiem.org
-Implementation-Version: 0.1
-

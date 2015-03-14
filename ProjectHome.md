@@ -1,0 +1,41 @@
+# Odiem (ODM), Object Directory Mapping #
+
+As well as ORMs (object relational mapping) maps java bean to SQL tables,
+odiem is a usefull java library that make you able to map a java bean to an **LDAP** object.
+
+## Features: ##
+
+  1. **Multi stack support** (Sun JNDI, Unboundid, Apache Directory Client Api, Novell JLDAP, custom...)
+  1. Mapping **LDAP** object via **annotations** (using field value if no value is passed to improve usability)
+  1. Reusable object conversion through `java.beans.PropertyEditor`
+  1. Nested object support
+  1. Collections support
+  1. Easy insert,update,delete,fetch
+  1. Connection listener (add,remove,update,connection-close)
+  1. Statistics (global and stack)
+  1. High performance through reflection cache (less than 3% of overhead)
+From junit test `org.odiem.test.OverheadTest` (60 seconds test)
+```
+  JNDI stack: 137286 fetch
+  Odiem(using JNDI stack): 133223 fetch
+
+  Odiem/JNDI > 0,97 (less than 3% of overhead)
+```
+
+Unboundid has its own persistence framework... but Odiem is better :)
+```
+  UnboundId Persistence Framework(using Unboundid stack): 21949 fetch
+  Odiem(using Unboundid stack): 22530 fetch
+
+  Odiem fetch 581 entries more than UnboundId Persistence Framework (10 seconds test)
+```
+
+
+## Coming soon ##
+
+  1. Paged Search
+  1. Change Password
+  1. Asyncronuous Operation
+  1. Jmx support
+  1. Schema utils (ldif to bean, bean to ldif)
+  1. Jaxb Integration (xsd support)

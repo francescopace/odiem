@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.odiem</groupId>
+    <artifactId>odiem</artifactId>
+    <version>1.2.0</version>
+    <packaging>jar</packaging>
+
+    <name>ODIEM</name>
+    <description>Object Directory Mapping for LDAP - A Java ORM-like library for LDAP directories</description>
+    <url>https://github.com/fpace/odiem</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <!-- Core dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.29.2-GA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.scannotation</groupId>
+            <artifactId>scannotation</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!-- LDAP Stack: UnboundID (optional) -->
+        <dependency>
+            <groupId>com.unboundid</groupId>
+            <artifactId>unboundid-ldapsdk</artifactId>
+            <version>6.0.11</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- LDAP Stack: Apache Directory (optional) -->
+        <!-- Using older version compatible with original code imports (org.apache.directory.shared.ldap) -->
+        <dependency>
+            <groupId>org.apache.directory.shared</groupId>
+            <artifactId>shared-all</artifactId>
+            <version>1.0.0-M13</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- 
+            LDAP Stack: OpenDJ (optional)
+            Note: The OpenDJ SDK API changed significantly in v4.x.
+            Original code was written for v3.x (ForgeRock era).
+            This stack is excluded from compilation.
+        -->
+        <!--
+        <dependency>
+            <groupId>org.openidentityplatform.opendj</groupId>
+            <artifactId>opendj-core</artifactId>
+            <version>4.6.3</version>
+            <optional>true</optional>
+        </dependency>
+        -->
+
+        <!-- 
+            LDAP Stack: Novell/OpenLDAP JLDAP (optional)
+            Note: This artifact is NOT available on Maven Central.
+            The Novell stack code will not compile without manually providing the JAR.
+            See: https://www.openldap.org/jldap/
+        -->
+        <!--
+        <dependency>
+            <groupId>com.novell.ldap</groupId>
+            <artifactId>jldap</artifactId>
+            <version>2009-10-07</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/novell/ldap.jar</systemPath>
+        </dependency>
+        -->
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.36</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Testcontainers for integration tests with real LDAP server -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.19.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Spring LDAP for benchmark comparison -->
+        <dependency>
+            <groupId>org.springframework.ldap</groupId>
+            <artifactId>spring-ldap-core</artifactId>
+            <version>3.2.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <!-- Exclude stacks with unavailable/incompatible dependencies -->
+                    <excludes>
+                        <!-- Novell stack - dependency not available on Maven Central -->
+                        <exclude>**/stacks/novell/**</exclude>
+                        <!-- OpenDJ stack - API changed significantly in v4.x, not compatible -->
+                        <exclude>**/stacks/opends/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Tests - add JVM args for Java 9+ module access -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <argLine>--add-opens java.desktop/com.sun.beans.editors=ALL-UNNAMED</argLine>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
+
